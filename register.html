@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registration Form</title>
+    <style>
+        /* Floating circles background animation */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background: #0a3d62;
+            position: relative;
+        }
+        .circle {
+            position: absolute;
+            bottom: -150px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            animation: floatUp 20s linear infinite;
+            opacity: 0.6;
+            z-index: 0;
+        }
+        .circle:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            left: 10%;
+            animation-duration: 25s;
+            animation-delay: 0s;
+        }
+        .circle:nth-child(2) {
+            width: 50px;
+            height: 50px;
+            left: 30%;
+            animation-duration: 20s;
+            animation-delay: 5s;
+        }
+        .circle:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            left: 50%;
+            animation-duration: 30s;
+            animation-delay: 2s;
+        }
+        .circle:nth-child(4) {
+            width: 60px;
+            height: 60px;
+            left: 70%;
+            animation-duration: 22s;
+            animation-delay: 7s;
+        }
+        .circle:nth-child(5) {
+            width: 90px;
+            height: 90px;
+            left: 85%;
+            animation-duration: 28s;
+            animation-delay: 3s;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-120vh);
+                opacity: 0;
+            }
+        }
+        /* Form container */
+        .form-container {
+            position: relative;
+            z-index: 1;
+            max-width: 400px;
+            margin: 80px auto;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px 40px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .form-container h2 {
+            margin-bottom: 25px;
+            color: #0a3d62;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #0a3d62;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 20px;
+            border: 2px solid #0a3d62;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #1e90ff;
+            outline: none;
+        }
+        input[type="submit"] {
+            background-color: #0a3d62;
+            color: white;
+            font-size: 18px;
+            padding: 12px 0;
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #1e90ff;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: -15px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+
+    <div class="form-container">
+        <h2>Registration Form &#128221;&#128100;</h2>
+        <form action="" method="post" novalidate>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email address" required />
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required minlength="6" />
+
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required minlength="6" />
+
+            <input type="submit" value="Register" />
+        </form>
+    </div>
+</body>
+</html>

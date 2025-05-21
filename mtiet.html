@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mother Teresa Institute Of Technology</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #1b0122;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 5px solid #4a148c;
+        }
+        header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
+            border: 5px solid #1b0122;
+            vertical-align: middle;
+        }
+        header h1 {
+            display: inline-block;
+            font-size: 2.5rem;
+            margin: 0 0 0 15px;
+            vertical-align: middle;
+        }
+        header .contact {
+            font-size: 1.2rem;
+            position: absolute;
+            right: 20px;
+            top: 30px;
+            color: #ddd;
+        }
+        nav {
+            background-color: #4a148c;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 0 15px;
+            padding: 8px 15px;
+            border-radius: 25px;
+            border: 2px solid transparent;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        nav a:hover {
+            background-color: #6a1b9a;
+            border-color: white;
+        }
+        .marquee-container {
+            background-color: #ddd;
+            padding: 10px 0;
+            margin: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee-container p {
+            display: inline-block;
+            color: #1b0122;
+            font-weight: bold;
+            animation: marquee 15s linear infinite;
+            margin: 0;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .announcements {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .announcement {
+            background-color: white;
+            border: 2px solid #1b0122;
+            border-radius: 25px;
+            padding: 15px;
+            width: 30%;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        .announcement.red { color: red; }
+        .announcement.green { color: green; }
+        .announcement.blue { color: blue; }
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            background-color: #1b0122;
+            color: white;
+            font-size: 1rem;
+            border-top: 5px solid #4a148c;
+            margin-top: 30px;
+        }
+        ul.semester-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 auto;
+            width: fit-content;
+        }
+        ul.semester-list li {
+            background-color: #4a148c;
+            margin: 5px 0;
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+        ul.semester-list li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        ul.semester-list li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="image.png" alt="Institute Logo" />
+        <h1>Mother Teresa Institute Of Technology</h1>
+        <div class="contact">Contact us: 0080808884054</div>
+    </header>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="register.html">Register</a>
+        <a href="login.html">Login</a>
+    </nav>
+    <div class="marquee-container">
+        <p>Admissions are open from 20-05-2025 to 09-06-2025                   Warning:pakka seat theeskuntey bokke ........!</p>
+    </div>
+    <div class="announcements">
+        <div class="announcement red">Exam results vachai babu</div>
+        <div class="announcement green">placements kuda vachai babu</div>
+        <div class="announcement blue">events kuda jaruguthai babu</div>
+    </div>
+    <footer>
+        <ul class="semester-list">
+            <li><a href="http://www.google.com">V semester</a></li>
+        </ul>
+    </footer>
+</body>
+</html>
