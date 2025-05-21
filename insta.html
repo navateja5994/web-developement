@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Instagram Interface</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(-45deg, #d3d3d3, #a9a9a9, #c0c0c0, #d3d3d3);
+            background-size: 400% 400%;
+            animation: greyBackgroundAnimation 15s ease infinite;
+            color: #262626;
+            position: relative;
+            overflow-x: hidden;
+        }
+        @keyframes greyBackgroundAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        .background-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+            opacity: 0.8;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .shape1 {
+            width: 120px;
+            height: 120px;
+            top: 10%;
+            left: 15%;
+            animation-name: float1;
+            animation-duration: 8s;
+            background-image: url('a.png');
+        }
+        .shape2 {
+            width: 150px;
+            height: 150px;
+            top: 40%;
+            left: 70%;
+            animation-name: float2;
+            animation-duration: 12s;
+            background-image: url('n.png');
+        }
+        .shape3 {
+            width: 100px;
+            height: 100px;
+            top: 75%;
+            left: 30%;
+            animation-name: float3;
+            animation-duration: 10s;
+            background-image: url('v.png');
+        }
+        @keyframes float1 {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-20px) translateX(10px); }
+        }
+        @keyframes float2 {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(15px) translateX(-15px); }
+        }
+        @keyframes float3 {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-10px) translateX(20px); }
+        }
+        header {
+            height: 60px;
+            background: white;
+            border-bottom: 1px solid #dbdbdb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .logo {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 28px;
+            font-weight: bold;
+            color: #262626;
+            user-select: none;
+        }
+        .search-bar {
+            flex: 1;
+            max-width: 215px;
+            margin: 0 20px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 5px 10px;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            background-color: #fafafa;
+            font-size: 14px;
+            position: relative;
+        }
+        .search-suggestions {
+            position: absolute;
+            background: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            width: 215px;
+            max-height: 150px;
+            overflow-y: auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 20;
+        }
+        .search-suggestions div {
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+        .search-suggestions div:hover {
+            background-color: #efefef;
+        }
+        .header-icons {
+            display: flex;
+            gap: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        main {
+            display: flex;
+            max-width: 935px;
+            margin: 20px auto;
+            gap: 28px;
+        }
+        .feed {
+            flex: 2;
+        }
+        .post {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        .post:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .post-header, .post-footer {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .post-header .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .post-header img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .post-image {
+            width: 100%;
+            max-height: 600px;
+            object-fit: cover;
+        }
+        .post-footer .icons {
+            display: flex;
+            gap: 15px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .post-footer .icons .like {
+            transition: color 0.3s ease;
+        }
+        .post-footer .icons .like.liked {
+            color: #ed4956;
+            animation: likePulse 0.3s ease;
+        }
+        @keyframes likePulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .post-footer .likes {
+            font-weight: bold;
+            margin-top: 5px;
+            padding-left: 15px;
+            font-size: 14px;
+        }
+        aside {
+            flex: 1;
+            background: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            padding: 15px;
+            height: fit-content;
+        }
+        aside h3 {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .story {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .story img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #c13584;
+            object-fit: cover;
+        }
+        .story span {
+            font-size: 14px;
+            color: #262626;
+        }
+        .reels-section {
+            background: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .reels-section h3 {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .reels-container {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        .reel {
+            min-width: 120px;
+            height: 200px;
+            background: #000;
+            border-radius: 8px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .reel video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .reel .reel-user {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0,0,0,0.7);
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 54px;
+            background: white;
+            border-top: 1px solid #dbdbdb;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            font-size: 24px;
+            color: #262626;
+        }
+        footer .icon {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Instagram</div>
+        <div class="search-bar" style="position: relative;">
+            <input type="text" id="searchInput" placeholder="Search" autocomplete="off" />
+            <div class="search-suggestions" id="searchSuggestions"></div>
+        </div>
+        <div class="header-icons">
+            <span title="Home">&#8962;</span>
+            <span title="Messages">&#9993;</span>
+            <span title="New Post">&#43;</span>
+            <span title="Explore">&#128269;</span>
+            <span title="Notifications">&#128276;</span>
+            <span title="Profile">&#128100;</span>
+        </div>
+    </header>
+    <main>
+        <section class="reels-section">
+            <h3>Reels</h3>
+            <div class="reels-container">
+                <div class="reel">
+                    <video src="goodmorning.mp4" muted loop></video>
+                    <div class="reel-user">user1</div>
+                </div>
+                <div class="reel">
+                    <video src="Goodnight Uce.mp4" muted loop></video>
+                    <div class="reel-user">user2</div>
+                </div>
+                <div class="reel">
+                    <video src="video.html" muted loop></video>
+                    <div class="reel-user">user3</div>
+                </div>
+                <div class="reel">
+                    <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" muted loop></video>
+                    <div class="reel-user">user4</div>
+                </div>
+                <div class="reel">
+                    <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.webm" muted loop></video>
+                    <div class="reel-user">user5</div>
+                </div>
+                <div class="reel">
+                    <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/river.webm" muted loop></video>
+                    <div class="reel-user">user6</div>
+                </div>
+            </div>
+        </section>
+        <section class="feed">
+            <article class="post">
+                <div class="post-header">
+                    <div class="user-info">
+                        <img src="me.png" alt="User profile" />
+                        <span>username</span>
+                    </div>
+                    <div>...</div>
+                </div>
+                <img class="post-image" src="v.png" alt="Post image" />
+                <div class="post-footer">
+                    <div class="icons">
+                        <span class="like" title="Like">&#10084;</span>
+                        <span title="Comment">&#128172;</span>
+                        <span title="Share">&#10150;</span>
+                    </div>
+                    <div class="likes">123 likes</div>
+                </div>
+            </article>
+            <article class="post">
+                <div class="post-header">
+                    <div class="user-info">
+                        <img src="me.png" alt="User profile" />
+                        <span>anotheruser</span>
+                    </div>
+                    <div>...</div>
+                </div>
+                <img class="post-image" src="n.png" alt="Post image" />
+                <div class="post-footer">
+                    <div class="icons">
+                        <span class="like" title="Like">&#10084;</span>
+                        <span title="Comment">&#128172;</span>
+                        <span title="Share">&#10150;</span>
+                    </div>
+                    <div class="likes">456 likes</div>
+                </div>
+            </article>
+        </section>
+        <aside>
+            <h3>Stories</h3>
+            <div class="story">
+                <img src="me.png" alt="Story user" />
+                <span>username</span>
+            </div>
+            <div class="story">
+                <img src="n.png" alt="Story user" />
+                <span>anotheruser</span>
+            </div>
+            <div class="story">
+                <img src="v.png" alt="Story user" />
+                <span>thirduser</span>
+            </div>
+        </aside>
+    </main>
+    <footer>
+        <span class="icon" title="Home">&#8962;</span>
+        <span class="icon" title="Search">&#128269;</span>
+        <span class="icon" title="Add Post">&#43;</span>
+        <span class="icon" title="Likes">&#10084;</span>
+        <span class="icon" title="Profile">&#128100;</span>
+    </footer>
+    <script>
+        // Like button toggle
+        document.querySelectorAll('.like').forEach(likeBtn => {
+            likeBtn.addEventListener('click', () => {
+                likeBtn.classList.toggle('liked');
+            });
+        });
+
+        // Search suggestions
+        const searchInput = document.getElementById('searchInput');
+        const searchSuggestions = document.getElementById('searchSuggestions');
+        const users = ['username', 'anotheruser', 'thirduser', 'user1', 'user2', 'user3'];
+
+        searchInput.addEventListener('input', () => {
+            const value = searchInput.value.toLowerCase();
+            searchSuggestions.innerHTML = '';
+            if (value.length === 0) {
+                searchSuggestions.style.display = 'none';
+                return;
+            }
+            const filtered = users.filter(user => user.toLowerCase().includes(value));
+            if (filtered.length === 0) {
+                searchSuggestions.style.display = 'none';
+                return;
+            }
+            filtered.forEach(user => {
+                const div = document.createElement('div');
+                div.textContent = user;
+                div.addEventListener('click', () => {
+                    searchInput.value = user;
+                    searchSuggestions.style.display = 'none';
+                });
+                searchSuggestions.appendChild(div);
+            });
+            searchSuggestions.style.display = 'block';
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+
+        // Auto play reels videos
+        document.querySelectorAll('.reel video').forEach(video => {
+            video.play();
+        });
+    </script>
+</body>
+</html>
