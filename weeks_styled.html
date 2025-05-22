@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Importance of Days - Styled Week Blocks</title>
+  <style>
+    /* Wave background animation styles */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      background: #87CEEB; /* Sky blue background */
+    }
+    .wave {
+      position: absolute;
+      width: 200%;
+      height: 100%;
+      top: 0;
+      left: -50%;
+      background: repeating-linear-gradient(
+        45deg,
+        #fff,
+        #fff 10px,
+        #87CEEB 10px,
+        #87CEEB 20px
+      );
+      opacity: 0.5;
+      animation: waveAnimation 10s linear infinite;
+      z-index: 0;
+    }
+    .wave:nth-child(2) {
+      top: 10px;
+      animation-delay: -5s;
+      opacity: 0.3;
+    }
+    @keyframes waveAnimation {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(50%);
+      }
+    }
+    button {
+      margin: 10px;
+      padding: 15px 30px;
+      font-size: 18px;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    button:nth-child(2) {
+      background-color: #FF6F61; /* Monday - Coral */
+    }
+    button:nth-child(3) {
+      background-color: #6B5B95; /* Tuesday - Purple */
+    }
+    button:nth-child(4) {
+      background-color: #88B04B; /* Wednesday - Green */
+    }
+    button:nth-child(5) {
+      background-color: #F7CAC9; /* Thursday - Pink */
+      color: #333;
+    }
+    button:nth-child(6) {
+      background-color: #92A8D1; /* Friday - Light Blue */
+    }
+    button:nth-child(7) {
+      background-color: #955251; /* Saturday - Brownish */
+    }
+    button:nth-child(8) {
+      background-color: #B565A7; /* Sunday - Violet */
+    }
+    button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+    }
+    #info {
+      margin-top: 30px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Select a Day</h1>
+  
+  <button onclick="show('Monday')">Monday</button>
+  <button onclick="show('Tuesday')">Tuesday</button>
+  <button onclick="show('Wednesday')">Wednesday</button>
+  <button onclick="show('Thursday')">Thursday</button>
+  <button onclick="show('Friday')">Friday</button>
+  <button onclick="show('Saturday')">Saturday</button>
+  <button onclick="show('Sunday')">Sunday</button>
+
+  <div id="info"></div>
+
+  <script>
+    function show(day) {
+      let message = '';
+      switch(day) {
+        case 'Monday':
+          message = "thinadam nidrapodam";
+          break;
+        case 'Tuesday':
+          message = "thinadam aadukodam nidrapodam";
+          break;
+        case 'Wednesday':
+          message = "only thinadam";
+          break;
+        case 'Thursday':
+          message = "Just nidrapodam";
+          break;
+        case 'Friday':
+          message = "only aadukodam";
+          break;
+        case 'Saturday':
+          message = "Nidrapodam";
+          break;
+        case 'Sunday':
+          message = "Holiday jolly...!";
+          break;
+      }
+      document.getElementById('info').innerText = message;
+    }
+  </script>
+
+</body>
+</html>
