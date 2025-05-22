@@ -1,0 +1,190 @@
+<html>
+<head>
+    <title>Student results</title>
+    <style>
+        /* Background animation */
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        body {
+            margin: 0;
+            height: 100vh;
+            position: relative;
+            font-family: Arial, sans-serif;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(270deg, #ff6ec4, #7873f5, #4ade80, #facc15, #f87171);
+            background-size: 1000% 1000%;
+            animation: colorfulBG 20s ease infinite;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://upload.wikimedia.org/wikipedia/en/thumb/0/0e/JNTUA_Logo.png/220px-JNTUA_Logo.png') no-repeat center center fixed;
+            background-size: cover;
+            z-index: 0;
+            opacity: 0.3;
+        }
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridMove 10s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+        @keyframes colorfulBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        @keyframes gridMove {
+            0% {
+                background-position: 0 0, 0 0;
+            }
+            100% {
+                background-position: 40px 40px, 40px 40px;
+            }
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            width: 300px;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px 6px;
+            margin: 6px 0 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 48%;
+            padding: 10px;
+            margin: 6px 1% 0 1%;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button.reset {
+            background-color: #f44336;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        #avg {
+            margin-top: 15px;
+            font-weight: bold;
+            min-height: 24px;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script>
+        function calculateAverage() {
+            let name = document.getElementById("stn").value.trim();
+            let scores = [];
+            let errorMsg = "";
+            for (let i = 1; i <= 5; i++) {
+                let val = document.getElementById("s" + i).value.trim();
+                if (val === "") {
+                    errorMsg = "Please fill all marks fields.";
+                    break;
+                }
+                let num = Number(val);
+                if (isNaN(num) || num < 0 || num > 100) {
+                    errorMsg = "Marks must be numbers between 0 and 100.";
+                    break;
+                }
+                scores.push(num);
+            }
+            if (name === "") {
+                errorMsg = "Please enter the student name.";
+            }
+            let avgElem = document.getElementById("avg");
+            if (errorMsg !== "") {
+                avgElem.style.color = "red";
+                avgElem.innerText = errorMsg;
+                return;
+            }
+            let sum = scores.reduce((a, b) => a + b, 0);
+            let avg = sum / scores.length;
+            let grade = "";
+            if (avg >= 90) grade = "A";
+            else if (avg >= 80) grade = "B";
+            else if (avg >= 70) grade = "C";
+            else if (avg >= 60) grade = "D";
+            else grade = "F";
+            avgElem.style.color = "#333";
+            avgElem.innerText = "Student name: " + name + "  |  Average: " + avg.toFixed(2) + "  |  Grade: " + grade;
+        }
+        function resetForm() {
+            document.getElementById("stn").value = "";
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById("s" + i).value = "";
+            }
+            let avgElem = document.getElementById("avg");
+            avgElem.innerText = "";
+            avgElem.style.color = "#333";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align:center; margin-bottom: 20px;">STUDENT RESULTS</h1>
+        <label for="stn">Student Name:</label>
+        <input type="text" id="stn" placeholder="Enter student name"><br>
+        <label for="s1">Subject 1 Marks:</label>
+        <input type="number" id="s1" placeholder="0-100"><br>
+        <label for="s2">Subject 2 Marks:</label>
+        <input type="number" id="s2" placeholder="0-100"><br>
+        <label for="s3">Subject 3 Marks:</label>
+        <input type="number" id="s3" placeholder="0-100"><br>
+        <label for="s4">Subject 4 Marks:</label>
+        <input type="number" id="s4" placeholder="0-100"><br>
+        <label for="s5">Subject 5 Marks:</label>
+        <input type="number" id="s5" placeholder="0-100"><br>
+        <button onclick="calculateAverage()">Calculate</button>
+        <button class="reset" onclick="resetForm()">Reset</button>
+        <p id="avg"></p>  
+    </div>
+</body>
+</html>
