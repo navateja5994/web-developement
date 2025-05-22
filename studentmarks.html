@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Result Evaluation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            max-width: 500px;
+        }
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Student Grade Calculator</h2>
+    <form id="studentForm">
+        <label>Student Name:</label>
+        <input type="text" id="name" required>
+
+        <label>Subject 1 Marks:</label>
+        <input type="number" id="mark1" min="0" max="100" required>
+
+        <label>Subject 2 Marks:</label>
+        <input type="number" id="mark2" min="0" max="100" required>
+
+        <label>Subject 3 Marks:</label>
+        <input type="number" id="mark3" min="0" max="100" required>
+
+        <label>Subject 4 Marks:</label>
+        <input type="number" id="mark4" min="0" max="100" required>
+
+        <label>Subject 5 Marks:</label>
+        <input type="number" id="mark5" min="0" max="100" required>
+
+        <button type="button" onclick="evaluateStudent()">Calculate Result</button>
+    </form>
+
+    <div class="result" id="output"></div>
+
+    <script>
+        function evaluateStudent() {
+            const name = document.getElementById("name").value;
+            const marks = [
+                parseFloat(document.getElementById("mark1").value),
+                parseFloat(document.getElementById("mark2").value),
+                parseFloat(document.getElementById("mark3").value),
+                parseFloat(document.getElementById("mark4").value),
+                parseFloat(document.getElementById("mark5").value)
+            ];
+
+            const total = marks.reduce((sum, val) => sum + val, 0);
+            const average = total / marks.length;
+
+            let result = "";
+            let grade = "";
+
+            if (average >= 35) {
+                result = "Pass";
+
+                if (average >= 75 && average <= 100) {
+                    grade = "A";
+                } else if (average >= 45 && average <= 74) {
+                    grade = "B";
+                } else if (average >= 36 && average <= 44) {
+                    grade = "C";
+                }
+            } else {
+                result = "Fail";
+                grade = "Fail";
+            }
+
+            document.getElementById("output").innerHTML = `
+                <p>Student Name: ${name}</p>
+                <p>Marks: ${marks.join(", ")}</p>
+                <p>Average: ${average.toFixed(2)}</p>
+                <p>Result: ${result}</p>
+                <p>Grade: ${grade}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
