@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aadhaar Card Generator</title>
+    <style>
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        /* Container for form inputs */
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #0069b1;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .generate-btn:hover {
+            background-color: #005b94;
+        }
+
+        /* Image Upload Section */
+        .image-upload {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #imagePreview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-top: 10px;
+            object-fit: cover;
+        }
+
+        /* Aadhaar Card Styling */
+        .aadhar-card {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            background-color: #e9f1f9;
+            color: black;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            position: relative;
+            border: 2px solid #0069b1;
+            transition: all 0.3s ease;
+        }
+
+        .aadhar-card .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: auto;
+        }
+
+        .aadhar-card .header {
+            font-size: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #0069b1;
+            margin-top: 50px;
+        }
+
+        .aadhar-card .aadhar-number {
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .aadhar-card .details {
+            margin-top: 30px;
+            font-size: 16px;
+        }
+
+        .aadhar-card .details p {
+            margin: 10px 0;
+        }
+
+        .aadhar-card .footer {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 20px;
+            color: #777;
+        }
+
+        .aadhar-card .footer p {
+            font-weight: bold;
+        }
+
+        .aadhar-card .photo {
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #0069b1;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Aadhaar Card Generator</h1>
+
+        <!-- Form for User Input -->
+        <div class="form-group">
+            <label for="candidate">Candidate Name:</label>
+            <input type="text" id="candidate" placeholder="Enter Candidate Name" required>
+        </div>
+        <div class="form-group">
+            <label for="father">Father's Name:</label>
+            <input type="text" id="father" placeholder="Enter Father's Name">
+        </div>
+        <div class="form-group">
+            <label for="mother">Mother's Name:</label>
+            <input type="text" id="mother" placeholder="Enter Mother's Name">
+        </div>
+        <div class="form-group">
+            <label for="aadhar">Aadhar Number (12 digits):</label>
+            <input type="text" id="aadhar" maxlength="12" placeholder="Enter Aadhar Number" required>
+        </div>
+
+        <!-- Image Upload Section -->
+        <div class="image-upload">
+            <label for="imageUpload">Upload Candidate Photo:</label>
+            <input type="file" id="imageUpload" accept="image/*">
+            <img id="imagePreview" src="" alt="Image Preview" style="display:none;">
+        </div>
+
+        <button class="generate-btn" onclick="generateAadharCard()">Generate Aadhaar</button>
+    </div>
+
+    <!-- Aadhaar Card Display -->
+    <div id="aadharCard" class="aadhar-card">
+        <img src="government-of-india.jpg" alt="Aadhaar Logo" class="logo">
+        <div class="card-content">
+            <div class="header">Government of India</div>
+            <div class="aadhar-number" id="aadharNumber"></div>
+            <div class="details">
+                <p><strong>Full Name:</strong> <span id="nameDisplay"></span></p>
+                <p><strong>Father's Name:</strong> <span id="fatherDisplay"></span></p>
+                <p><strong>Mother's Name:</strong> <span id="motherDisplay"></span></p>
+            </div>
+            <div class="footer">
+                <p>Aadhaar Number Linked</p>
+            </div>
+            <img id="aadharCardImage" class="photo" src="" alt="Candidate Photo">
+        </div>
+    </div>
+
+    <script>
+        // Handle Image Upload and Preview
+        document.getElementById('imageUpload').addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Display the image in the preview section
+                document.getElementById('imagePreview').src = e.target.result;
+                // Set the image to be displayed on the Aadhaar card
+                document.getElementById('aadharCardImage').src = e.target.result;
+                document.getElementById('imagePreview').style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Function to Generate Aadhaar Card
+        function generateAadharCard() {
+            // Get input values
+            var candidateName = document.getElementById("candidate").value.trim();
+            var fatherName = document.getElementById("father").value.trim();
+            var motherName = document.getElementById("mother").value.trim();
+            var aadharNumber = document.getElementById("aadhar").value.trim();
+
+            // Validate Inputs
+            if (candidateName === "" || aadharNumber.length !== 12) {
+                alert("Please fill in valid data.");
+                return;
+            }
+
+            // Aadhaar Card Number Logic (for simplicity, using the Aadhar number itself as the ID)
+            var aadharID = "AADHAR: " + aadharNumber;
+
+            // Display the Aadhaar Card Details
+            document.getElementById("nameDisplay").innerText = candidateName;
+            document.getElementById("fatherDisplay").innerText = fatherName ? fatherName : "N/A";
+            document.getElementById("motherDisplay").innerText = motherName ? motherName : "N/A";
+            document.getElementById("aadharNumber").innerText = aadharID;
+
+            // Show the Aadhaar Card
+            document.getElementById("aadharCard").style.display = "block";
+        }
+    </script>
+</body>
+</html>

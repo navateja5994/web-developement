@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAN Card Generator</title>
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        /* Form Container Styling */
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .button {
+            width: 100%;
+            padding: 14px;
+            background-color: #0069b1;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #005b94;
+        }
+
+        /* PAN Card Styling */
+        .pan-card {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            background-color: #e9f1f9;
+            color: black;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            border: 2px solid #0069b1;
+            margin-top: 30px; /* Ensure the PAN card appears below the form */
+            transition: all 0.3s ease;
+        }
+
+        .pan-card .header {
+            font-size: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #0069b1;
+        }
+
+        .pan-card .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: auto;
+        }
+
+        .pan-card .pan-number {
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .pan-card .details {
+            margin-top: 30px;
+            font-size: 16px;
+        }
+
+        .pan-card .details p {
+            margin: 10px 0;
+        }
+
+        .pan-card .footer {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 20px;
+            color: #777;
+        }
+
+        .pan-card .footer .aadhar {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Image upload styling */
+        .image-upload-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #imagePreview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-top: 10px;
+            object-fit: cover;
+        }
+
+        /* Styling the photo in the PAN card */
+        .pan-card .photo {
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #0069b1;
+            object-fit: cover;
+        }
+
+        /* Styling the borders and the photo upload button */
+        .form-group input[type="file"] {
+            padding: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>PAN Card Generator</h1>
+    <div class="form-group">
+        <label for="candidate">Candidate Name:</label>
+        <input type="text" id="candidate" placeholder="Enter Candidate Name">
+    </div>
+    <div class="form-group">
+        <label for="father">Father's Name:</label>
+        <input type="text" id="father" placeholder="Enter Father's Name">
+    </div>
+    <div class="form-group">
+        <label for="mother">Mother's Name:</label>
+        <input type="text" id="mother" placeholder="Enter Mother's Name">
+    </div>
+    <div class="form-group">
+        <label for="aadhar">Aadhar Card Number:</label>
+        <input type="text" id="aadhar" maxlength="12" placeholder="Enter Aadhar Number">
+    </div>
+
+    <!-- Image Upload Section -->
+    <div class="image-upload-container">
+        <label for="imageUpload">Upload Candidate Photo:</label>
+        <input type="file" id="imageUpload" accept="image/*">
+        <img id="imagePreview" src="" alt="Image Preview">
+    </div>
+
+    <button class="button" onclick="generatePanCard()">Generate PAN</button>
+</div>
+
+<!-- PAN Card Output -->
+<div id="panCard" class="pan-card">
+    <img src="government-of-india.jpg" alt="Government of India" class="logo">
+    <div class="header">Government of India</div>
+    <div class="pan-number" id="panNumber"></div>
+    <div class="details">
+        <p><strong>Full Name:</strong> <span id="nameDisplay"></span></p>
+        <p><strong>Father's Name:</strong> <span id="fatherDisplay"></span></p>
+        <p><strong>Mother's Name:</strong> <span id="motherDisplay"></span></p>
+        <p><strong>Aadhar Number:</strong> <span id="aadharDisplay"></span></p>
+    </div>
+    <div class="footer">
+        <p class="aadhar"><strong>Aadhar Linked</strong></p>
+        <p>Issued by: Income Tax Department</p>
+    </div>
+    
+    <!-- Photo Display on PAN Card -->
+    <img id="panCardImage" class="photo" src="" alt="Candidate Photo">
+</div>
+
+<script>
+    // Handle image upload and preview
+    document.getElementById('imageUpload').addEventListener('change', function(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            // Display the image in the preview section
+            document.getElementById('imagePreview').src = e.target.result;
+            // Set the image to be displayed on the PAN card
+            document.getElementById('panCardImage').src = e.target.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Generate PAN Card
+    function generatePanCard() {
+        // Get input values
+        var candidateName = document.getElementById("candidate").value.trim();
+        var fatherName = document.getElementById("father").value.trim();
+        var motherName = document.getElementById("mother").value.trim();
+        var aadhar = document.getElementById("aadhar").value.trim();
+
+        // Validate inputs
+        if (candidateName.length < 4 || fatherName === "" || motherName === "" || aadhar.length < 12) {
+            alert("Please fill all fields correctly.");
+            return;
+        }
+
+        // PAN Generation Logic
+        var pan = candidateName.slice(0, 4).toUpperCase() +
+                  fatherName.charAt(fatherName.length - 1).toUpperCase() +
+                  motherName.charAt(motherName.length - 1).toUpperCase() +
+                  aadhar.slice(-4);
+
+        // Display PAN Card Details
+        document.getElementById("nameDisplay").innerText = candidateName;
+        document.getElementById("fatherDisplay").innerText = fatherName;
+        document.getElementById("motherDisplay").innerText = motherName;
+        document.getElementById("aadharDisplay").innerText = aadhar;
+        document.getElementById("panNumber").innerText = pan;
+
+        // Show the PAN card
+        document.getElementById("panCard").style.display = "block";
+    }
+</script>
+
+</body>
+</html>
