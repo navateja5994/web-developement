@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <script>
+        function a()
+        {
+            var x = parseInt(document.getElementById("a").value);
+            var pattern = "";
+            for(var i=0; i<x; i++)
+            {
+                for(var j=0; j<x; j++)
+                {
+                    if(i==j || i==(x-1) || j==0 )
+                    {
+                        pattern += "* ";
+                    }
+                    else
+                    {
+                        pattern += "&nbsp;&nbsp;";
+                    }
+                }
+                pattern += "<br>";
+            }
+            document.getElementById("patternContainer").innerHTML = pattern;
+        }
+        </script>
+    </head>
+    <body>
+        <input type="number" id="a"><br><br>
+        <button onclick="a()">Click me</button>
+        <div id="patternContainer" style="font-family: monospace; white-space: nowrap; margin-top: 10px;"></div>
+    </body>
+</html>
